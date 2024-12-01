@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:52:27 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/28 20:11:10 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/01 23:39:26 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,12 @@ void	raycast_calcul(t_game *game)
 	rc.buffer = (int *)malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
 	if (!rc.buffer)
 	{
+		perror("Erreur malloc");
 		free_all_exit(game, EXIT_FAILURE);
 		return ;
 	}
-	mlx_clear_window(game->mlx_ptr, game->win_ptr);
-	//memset(rc.buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
+	//mlx_clear_window(game->mlx_ptr, game->win_ptr);
+	ft_memset(rc.buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int)); // reset le buffer pour l'affichage
 	x = 0;
 	while (x < SCREEN_WIDTH)
 	{
@@ -192,7 +193,7 @@ void	raycast_calcul(t_game *game)
 	rc.img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
 	rc.data = (int *)mlx_get_data_addr(rc.img, &game->images[0].bpp,
 			&game->images[0].line_length, &game->images[0].endian);
-	memcpy(rc.data, rc.buffer, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
+	ft_memcpy(rc.data, rc.buffer, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, rc.img, 0, 0);
 	free(rc.buffer);
 	mlx_destroy_image(game->mlx_ptr, rc.img);

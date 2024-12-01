@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:48:16 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/28 19:42:05 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/01 23:21:03 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,13 @@ void	load_images(t_game *game, int width, int height,
 		int floor_color, int ceiling_color)
 {
 	load_textures(game, width, height);
-	load_floor_and_ceiling(game, width, height, floor_color, ceiling_color);
+	(void)ceiling_color;
+	(void)floor_color;
+	//load_floor_and_ceiling(game, width, height, floor_color, ceiling_color);
 }
 
 
-t_game *init_game(int width, int height, char *title)
+t_game *init_game(char *path, int width, int height, char *title)
 {
 	t_game *game;
 
@@ -98,6 +100,10 @@ t_game *init_game(int width, int height, char *title)
 	game->win_ptr = mlx_new_window(game->mlx_ptr, width, height, title);
 	if (!game->win_ptr)
 		free_all_exit(game, EXIT_FAILURE);
+	game->player.initialised = 0;
+	game->map = parse_map(path, game);
+	game->player.pos.x += 0.5;
+	game->player.pos.y += 0.5;
 	init_image_paths(game);
 	load_images(game, width, height, 0x87CEEB, 0x00FF7F);
 	return (game);

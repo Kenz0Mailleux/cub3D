@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 21:47:58 by kmailleu          #+#    #+#             */
-/*   Updated: 2023/11/23 16:27:52 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:27:03 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,24 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
 
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <string.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h> 
 # include <stdint.h>
+
+/* printf include */
+# include <stdarg.h>
+# include <limits.h>
 
 /* libc functions */
 void	*ft_memset(void *b, int c, size_t len);
@@ -68,6 +81,7 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }						t_list;
+
 t_list	*ft_lstnew(void *content);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
@@ -77,5 +91,29 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+/* gnl functions */
+char	*get_next_line(int fd);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+int		ft_strchr_gnl(char *string, int c, int d);
+int		ft_strlen_gnl(char *str);
+char	*ft_strncpy_gnl(char *dest, char *src, int n);
+void	*ft_memset_gnl(void *ptr, int value, size_t len);
+
+/* printf functions */
+int		ft_printf(const char *format, ...);
+int		from_char(int c);
+int		from_str(char *str);
+int		from_ptr(unsigned long long nbr);
+int		from_int(int nbr);
+int		from_uint(unsigned int nbr);
+int		from_x_x(unsigned int nbr, char format);
+char	*to_hexa(unsigned long long nbr, char *base);
+int		hex_len(unsigned long long nbr);
+
+// utils
+int		ft_putstr(char *str);
+int		ft_putchar(char str);
+void	reverse_string(char *str);
 
 #endif

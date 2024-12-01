@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ptr_cvrt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 18:08:48 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/02/26 16:42:52 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:23:20 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../libft.h"
 
 int	from_ptr(unsigned long long nbr)
 {

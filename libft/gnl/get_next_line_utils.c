@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:24:01 by kenzo             #+#    #+#             */
-/*   Updated: 2024/03/28 20:16:48 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:22:08 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../libft.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	int		sizetotal;
 	char	*res;
@@ -22,7 +22,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	if (!s1 || !s2)
 		return (free(s1), NULL);
-	sizetotal = ft_strlen(s1) + ft_strlen(s2);
+	sizetotal = ft_strlen_gnl(s1) + ft_strlen_gnl(s2);
 	res = malloc(sizeof(char) * (sizetotal + 1));
 	if (!res)
 		return (free(s1), NULL);
@@ -38,7 +38,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (free(s1), res);
 }
 
-void	*ft_memset(void *ptr, int value, size_t len)
+void	*ft_memset_gnl(void *ptr, int value, size_t len)
 {
 	size_t	i;
 	char	*str;
@@ -54,7 +54,7 @@ void	*ft_memset(void *ptr, int value, size_t len)
 	return (ptr);
 }
 
-int	ft_strchr(char *s, int c, int d)
+int	ft_strchr_gnl(char *s, int c, int d)
 {
 	int	len;
 
@@ -79,7 +79,7 @@ int	ft_strchr(char *s, int c, int d)
 	return (-1);
 }
 
-int	ft_strlen(char *str)
+int	ft_strlen_gnl(char *str)
 {
 	int	len;
 
@@ -91,7 +91,7 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-char	*ft_strncpy(char *dest, char *src, int n)
+char	*ft_strncpy_gnl(char *dest, char *src, int n)
 {
 	int	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 16:36:16 by kenzo             #+#    #+#             */
-/*   Updated: 2024/03/28 20:09:33 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:27:26 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char *s1, char *s2);
-int		ft_strchr(char *string, int c, int d);
-int		ft_strlen(char *str);
-char	*ft_strncpy(char *dest, char *src, int n);
-void	*ft_memset(void *ptr, int value, size_t len);
+char	*ft_strjoin_gnl(char *s1, char *s2);
+int		ft_strchr_gnl(char *string, int c, int d);
+int		ft_strlen_gnl(char *str);
+char	*ft_strncpy_gnl(char *dest, char *src, int n);
+void	*ft_memset_gnl(void *ptr, int value, size_t len);
 
 #endif

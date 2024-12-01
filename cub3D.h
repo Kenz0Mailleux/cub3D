@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:08 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/28 20:11:34 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/01 22:26:32 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define CUB3D_H
 
 #include "minilibx/mlx.h"
+#include "libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -33,11 +34,18 @@
 #define MAP_HEIGHT 6
 
 
+// typedef struct s_dico
+// {
+// 	char *key;
+// 	char *value;
+// } t_dico;
+
 // Structure pour gérer une image
 typedef struct s_image
 {
     void    *img_ptr;
     char    *path;
+	int		found;
     int     *data;
     int     bpp;
     int     line_length;
@@ -46,9 +54,10 @@ typedef struct s_image
 
 typedef struct s_map
 {
-    int **data;
-    int width;
-    int height;
+    int 	**data;
+    int 	width;
+    int 	height;
+	t_image	image[6];
 } t_map;
 
 typedef struct s_vector
@@ -59,9 +68,10 @@ typedef struct s_vector
 
 typedef struct s_player
 {
-    t_vector pos;
-    t_vector dir;
-    t_vector plane;
+    t_vector	pos;
+    t_vector	dir;
+    t_vector	plane;
+	int			initialised;
 } t_player;
 
 
@@ -101,20 +111,21 @@ typedef struct s_game
     void    *mlx_ptr;
     void    *win_ptr;
     t_image images[6];
+	int		bpp;
     t_player player;
     int     map_width;
     int     map_height;
     t_map   *map;
 } t_game;
 
-t_game *init_game(int width, int height, char *title);
+void print_map(t_map *map);
 void test_images(t_game *mlx, int width, int height);
 void draw_scene(t_game *game);
 void raycast_calcul(t_game *game);
 int handle_keypress(int keycode, t_game *game);
-t_map *parse_map(const char *filename);
+t_map *parse_map(char *filename, t_game *game);
 void	load_images(t_game *game, int width, int height, int floor_color, int ceiling_color);
-t_game *init_game(int width, int height, char *title);
+t_game *init_game(char *path, int width, int height, char *title);
 void free_map(int **map, int height);
 void free_all_exit(t_game *game, int succes);
 void calculate_wall_distance(t_game *game, t_raycast *rc);

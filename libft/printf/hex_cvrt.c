@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   hex_cvrt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:44:12 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/02/26 16:58:57 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:23:07 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../libft.h"
 
 int	hex_len(unsigned long long nbr)
 {

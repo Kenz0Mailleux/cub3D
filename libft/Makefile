@@ -1,42 +1,78 @@
-NAME = libfinal.a
+LIBC =	original/ft_isalpha.c \
+		original/ft_isdigit.c \
+		original/ft_isalnum.c \
+		original/ft_isascii.c \
+		original/ft_isprint.c \
+		original/ft_strlen.c \
+		original/ft_strlcat.c \
+		original/ft_strlcpy.c \
+		original/ft_tolower.c \
+		original/ft_toupper.c \
+		original/ft_memset.c \
+		original/ft_strdup.c \
+		original/ft_bzero.c \
+		original/ft_memcpy.c \
+		original/ft_calloc.c \
+		original/ft_putchar_fd.c \
+		original/ft_putstr_fd.c \
+		original/ft_putendl_fd.c \
+		original/ft_putnbr_fd.c \
+		original/ft_itoa.c \
+		original/ft_strmapi.c \
+		original/ft_substr.c \
+		original/ft_strchr.c \
+		original/ft_memmove.c \
+		original/ft_atoi.c \
+		original/ft_strjoin.c \
+		original/ft_strrchr.c \
+		original/ft_strncmp.c \
+		original/ft_memchr.c \
+		original/ft_strnstr.c \
+		original/ft_memcmp.c \
+		original/ft_strtrim.c \
+		original/ft_striteri.c \
+		original/ft_split.c \
+		original/ft_lstnew_bonus.c \
+		original/ft_lstadd_front_bonus.c \
+		original/ft_lstsize_bonus.c \
+		original/ft_lstlast_bonus.c \
+		original/ft_lstadd_back_bonus.c \
+		original/ft_lstdelone_bonus.c \
+		original/ft_lstclear_bonus.c \
+		original/ft_lstiter_bonus.c \
+		original/ft_lstmap_bonus.c \
+		printf/char_cvrt.c \
+		printf/ft_printf.c \
+		printf/hex_cvrt.c \
+		printf/nbr_cvrt.c \
+		printf/ptr_cvrt.c \
+		printf/utils.c \
+		gnl/get_next_line_utils.c \
+		gnl/get_next_line.c \
 
-MODULE1_DIR = original
-MODULE2_DIR = printf
-MODULE3_DIR = gnl
+SRCS = ${LIBC}
 
-MODULE1_LIB = $(MODULE1_DIR)/libft.a
-MODULE2_LIB = $(MODULE2_DIR)/libftprintf.a
-MODULE3_LIB = $(MODULE3_DIR)/lbftgnl.a
+OBJS = ${SRCS:.c=.o}
 
-LIBS = $(MODULE1_LIB) $(MODULE2_LIB) $(MODULE3_LIB)
+NAME = libft.a
 
-all: $(NAME)
+CC = cc
 
-$(NAME): $(LIBS)
-	@ar rcs $(NAME) $(LIBS) > /dev/null 2>&1
-	@echo "Final library created: $(NAME)"
+CFLAGS = -Wall -Werror -Wextra
 
-$(MODULE1_LIB):
-	@$(MAKE) -C $(MODULE1_DIR) > /dev/null 2>&1
+all: ${NAME}
 
-$(MODULE2_LIB):
-	@$(MAKE) -C $(MODULE2_DIR) > /dev/null 2>&1
+.c.o:
+	@${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-$(MODULE3_LIB):
-	@$(MAKE) -C $(MODULE3_DIR) > /dev/null 2>&1
+${NAME}: ${OBJS}
+	@ar -rsc ${NAME} ${OBJS}
 
 clean:
-	@$(MAKE) -C $(MODULE1_DIR) clean > /dev/null 2>&1
-	@$(MAKE) -C $(MODULE2_DIR) clean > /dev/null 2>&1
-	@$(MAKE) -C $(MODULE3_DIR) clean > /dev/null 2>&1
-	@echo "Cleaned object files from all modules"
+	@rm -f ${OBJS}
 
 fclean: clean
-	@$(MAKE) -C $(MODULE1_DIR) fclean > /dev/null 2>&1
-	@$(MAKE) -C $(MODULE2_DIR) fclean > /dev/null 2>&1
-	@$(MAKE) -C $(MODULE3_DIR) fclean > /dev/null 2>&1
-	@rm -f $(NAME)
-	@echo "Cleaned all libraries"
+	@rm -f ${NAME}
 
 re: fclean all
 

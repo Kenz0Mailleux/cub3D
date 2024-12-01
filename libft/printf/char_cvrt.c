@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   char_cvrt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:09:36 by kmailleu          #+#    #+#             */
-/*   Updated: 2024/02/26 16:34:03 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:23:13 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../libft.h"
 
 int	from_char(int c)
 {
