@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:08 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/01 23:42:27 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/04 19:26:12 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ int	parse_file(t_map *map, char **map_str, t_game *game)
 				}
 				else
 				{
-					perror("Erreur malloc");
+					perror("Erreur file");
 					exit(1);
 				}
 			}
@@ -199,7 +199,7 @@ int	parse_file(t_map *map, char **map_str, t_game *game)
 				}
 				else
 				{
-					perror("Erreur malloc");
+					perror("Erreur file");
 					exit(1);
 				}
 			}
@@ -213,7 +213,7 @@ int	parse_file(t_map *map, char **map_str, t_game *game)
 				}
 				else
 				{
-					perror("Erreur malloc");
+					perror("Erreur file");
 					exit(1);
 				}
 			}
@@ -227,7 +227,7 @@ int	parse_file(t_map *map, char **map_str, t_game *game)
 				}
 				else
 				{
-					perror("Erreur malloc");
+					perror("Erreur file");
 					exit(1);
 				}
 			}
@@ -241,7 +241,7 @@ int	parse_file(t_map *map, char **map_str, t_game *game)
 				}
 				else
 				{
-					perror("Erreur malloc");
+					perror("Erreur file");
 					exit(1);
 				}
 			}
@@ -422,7 +422,7 @@ t_map *parse_map(char *filename, t_game *game)
 		exit(1);
 		//free_all_exit(game, EXIT_FAILURE);
 	}
-	print_map(map);
+	//print_map(map);
 	return (map);
 }
 

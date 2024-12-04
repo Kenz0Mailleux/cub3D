@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:08 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/01 22:26:32 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/04 18:57:40 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <math.h>
 #include <string.h>
 
-#define KEY_ESCAPE 53
+#define KEY_ESCAPE 65307
 #define KEY_Z 122
 #define KEY_Q 113
 #define KEY_S 115
