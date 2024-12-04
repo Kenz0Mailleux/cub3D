@@ -203,8 +203,8 @@ t_game *init_game(int width, int height, char *title)
 	game->win_ptr = mlx_new_window(game->mlx_ptr, width, height, title);
 	if (!game->win_ptr)
 		free_all_exit(game);
-	//init_image_paths(game);
-	//load_images(game, width, height);
+	init_image_paths(game);
+	load_images(game, width, height);
 	return (game);
 }
 
@@ -239,44 +239,53 @@ int handle_keypress(int keycode, t_game *game)
 {
 	double old_dir_x;
 
-	write(1, "a", 2);
 	printf("Keycode reçu : %d\n", keycode);
-	// if (keycode == KEY_ESCAPE)
-	// 	free_all_exit(game);
-	// if (keycode == KEY_Z) //forward
-	// {
-	// 	if (game->map->data[(int)(game->player.pos.y)][(int)(game->player.pos.x + game->player.dir.x * MOVE_SPEED)] == 0)
-	// 		game->player.pos.x += game->player.dir.x * MOVE_SPEED;
-	// 	if (game->map->data[(int)(game->player.pos.y + game->player.dir.y * MOVE_SPEED)][(int)game->player.pos.x] == 0)
-	// 		game->player.pos.y += game->player.dir.y * MOVE_SPEED; 
-	// }
-	// if (keycode == KEY_S) //back
-	// {
-	// 	if (game->map->data[(int)(game->player.pos.y)][(int)(game->player.pos.x - game->player.dir.x * MOVE_SPEED)] == 0)
-	// 		game->player.pos.x -= game->player.dir.x * MOVE_SPEED;
-	// 	if (game->map->data[(int)(game->player.pos.y - game->player.dir.y * MOVE_SPEED)][(int)game->player.pos.x] == 0)
-	// 		game->player.pos.y -= game->player.dir.y * MOVE_SPEED;
-	// }
-	// if (keycode == KEY_Q) //left
-	// {
-	// 	old_dir_x = game->player.dir.x;
-	// 	game->player.dir.x = game->player.dir.x * cos(-ROT_SPEED) - game->player.dir.y * sin(-ROT_SPEED);
-	// 	game->player.dir.y = old_dir_x * sin(-ROT_SPEED) + game->player.dir.y * cos(-ROT_SPEED);
-	// }
-	// if (keycode == KEY_D) //right
-	// {
-	// 	old_dir_x = game->player.dir.x;
-	// 	game->player.dir.x = game->player.dir.x * cos(ROT_SPEED) - game->player.dir.y * sin(ROT_SPEED);
-	// 	game->player.dir.y = old_dir_x * sin(ROT_SPEED) + game->player.dir.y * cos(ROT_SPEED);
-	// }
+	if (keycode == KEY_ESCAPE)
+		free_all_exit(game);
+	if (keycode == KEY_Z) //forward
+	{
+		if (game->map->data[(int)(game->player.pos.y)][(int)(game->player.pos.x + game->player.dir.x * MOVE_SPEED)] == 0)
+			game->player.pos.x += game->player.dir.x * MOVE_SPEED;
+		if (game->map->data[(int)(game->player.pos.y + game->player.dir.y * MOVE_SPEED)][(int)game->player.pos.x] == 0)
+			game->player.pos.y += game->player.dir.y * MOVE_SPEED; 
+	}
+	if (keycode == KEY_S) //back
+	{
+		if (game->map->data[(int)(game->player.pos.y)][(int)(game->player.pos.x - game->player.dir.x * MOVE_SPEED)] == 0)
+			game->player.pos.x -= game->player.dir.x * MOVE_SPEED;
+		if (game->map->data[(int)(game->player.pos.y - game->player.dir.y * MOVE_SPEED)][(int)game->player.pos.x] == 0)
+			game->player.pos.y -= game->player.dir.y * MOVE_SPEED;
+	}
+	if (keycode == KEY_Q) //left
+	{
+		old_dir_x = game->player.dir.x;
+		game->player.dir.x = game->player.dir.x * cos(-ROT_SPEED) - game->player.dir.y * sin(-ROT_SPEED);
+		game->player.dir.y = old_dir_x * sin(-ROT_SPEED) + game->player.dir.y * cos(-ROT_SPEED);
+	}
+	if (keycode == KEY_D) //right
+	{
+		old_dir_x = game->player.dir.x;
+		game->player.dir.x = game->player.dir.x * cos(ROT_SPEED) - game->player.dir.y * sin(ROT_SPEED);
+		game->player.dir.y = old_dir_x * sin(ROT_SPEED) + game->player.dir.y * cos(ROT_SPEED);
+	}
 	return (0);
 }
 
+int close_game(t_game *game)
+{
+    mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+    free_all_exit(game);
+    exit(0);
+    return (0);
+}
+
+
 void start_loop(t_game *game)
 {
-	//draw_scene(game);
-	mlx_hook(game->win_ptr, 3, 0, &handle_keypress, game);
-	write(1, "a", 2);
+	draw_scene(game);
+	mlx_hook(game->win_ptr, 2, 1L << 0, handle_keypress, game);
+	//mlx_hook(game->win_ptr, 3, 1L << 1, handle_keyrelease, game);
+	mlx_hook(game->win_ptr, 17, 0, close_game, game);
 	mlx_loop(game->mlx_ptr);
 }
 
