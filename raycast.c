@@ -5,148 +5,196 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 13:48:01 by kenzo             #+#    #+#             */
-/*   Updated: 2024/11/26 19:40:31 by kenzo            ###   ########.fr       */
+/*   Created: 2024/11/28 15:52:27 by kenzo             #+#    #+#             */
+/*   Updated: 2024/12/01 23:39:26 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-static void		calculate_step_and_side_dist(t_game *game, double ray_dir_x, double ray_dir_y, 
-					int *step_x, int *step_y, double *side_dist_x, double *side_dist_y)
+void	calcul_ray_dir(t_raycast *rc, t_game *game, int x)
 {
-	int	map_x;
-	int	map_y;
+	rc->camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
+	rc->ray_dir_x = game->player.dir.x + game->player.plane.x * rc->camera_x;
+	rc->ray_dir_y = game->player.dir.y + game->player.plane.y * rc->camera_x;
+	rc->map_x = (int)game->player.pos.x;
+	rc->map_y = (int)game->player.pos.y;
+	rc->delta_dist_x = fabs(1 / rc->ray_dir_x);
+	rc->delta_dist_y = fabs(1 / rc->ray_dir_y);
+}
 
-	map_x = (int)game->player.pos.x;
-	map_y = (int)game->player.pos.y;
-
-	if (ray_dir_x < 0)
+void	calcul_move_dist(t_raycast *rc, t_game *game)
+{
+	if (rc->ray_dir_x < 0)
 	{
-		*step_x = -1;
-		*side_dist_x = (game->player.pos.x - map_x) * (1 / ray_dir_x);
+		rc->step_x = -1;
+		rc->side_dist_x = (game->player.pos.x - rc->map_x)
+			* rc->delta_dist_x;
 	}
 	else
 	{
-		*step_x = 1;
-		*side_dist_x = (map_x + 1.0 - game->player.pos.x) * (1 / ray_dir_x);
+		rc->step_x = 1;
+		rc->side_dist_x = (rc->map_x + 1.0 - game->player.pos.x)
+			* rc->delta_dist_x;
 	}
-
-	if (ray_dir_y < 0)
+	if (rc->ray_dir_y < 0)
 	{
-		*step_y = -1;
-		*side_dist_y = (game->player.pos.y - map_y) * (1 / ray_dir_y);
+		rc->step_y = -1;
+		rc->side_dist_y = (game->player.pos.y - rc->map_y)
+			* rc->delta_dist_y;
 	}
 	else
 	{
-		*step_y = 1;
-		*side_dist_y = (map_y + 1.0 - game->player.pos.y) * (1 / ray_dir_y);
+		rc->step_y = 1;
+		rc->side_dist_y = (rc->map_y + 1.0 - game->player.pos.y)
+			* rc->delta_dist_y;
 	}
 }
 
-static int	perform_dda(t_game *game, double ray_dir_x, double ray_dir_y, int step_x, int step_y)
+void	detect_collision(t_raycast *rc, t_game *game)
 {
-	int		map_x;
-	int		map_y;
-	int		hit;
-	int		side;
-
-	map_x = (int)game->player.pos.x;
-	map_y = (int)game->player.pos.y;
-	hit = 0;
-
-	while (!hit)
+	rc->hit = 0;
+	while (rc->hit == 0)
 	{
-		if (game->side_dist_x < game->side_dist_y)
+		if (rc->side_dist_x < rc->side_dist_y)
 		{
-			game->side_dist_x += game->delta_dist_x;
-			map_x += step_x;
-			side = 0;
+			rc->side_dist_x += rc->delta_dist_x;
+			rc->map_x += rc->step_x;
+			rc->side = 0;
 		}
 		else
 		{
-			game->side_dist_y += game->delta_dist_y;
-			map_y += step_y;
-			side = 1;
+			rc->side_dist_y += rc->delta_dist_y;
+			rc->map_y += rc->step_y;
+			rc->side = 1;
 		}
-
-		if (map_x < 0 || map_x >= game->map_width || map_y < 0 || map_y >= game->map_height)
-		{
-			return (-1); // Rayon hors limite
-		}
-		if (game->map->data[map_y][map_x] > 0)
-    		hit = 1;
+		if (game->map->data[rc->map_y][rc->map_x] > 0)
+			rc->hit = 1;
 	}
-	return (side);
 }
 
-static void		calculate_wall_distance(t_game *game, double ray_dir_x, double ray_dir_y, int side)
+void	calcul_wall_dist(t_raycast *rc, t_game *game)
 {
-	if (side == 0)
-		game->perp_wall_dist = (game->player.pos.x - game->player.pos.x + (1 - game->step_x) / 2) / ray_dir_x;
+	if (rc->side == 0)
+		rc->perp_wall_dist = (rc->map_x - game->player.pos.x
+				+ (1 - rc->step_x) / 2) / rc->ray_dir_x;
 	else
-		game->perp_wall_dist = (game->player.pos.y - game->player.pos.y + (1 - game->step_y) / 2) / ray_dir_y;
+		rc->perp_wall_dist = (rc->map_y - game->player.pos.y
+				+ (1 - rc->step_y) / 2) / rc->ray_dir_y;
 }
 
-static void		draw_wall_slice(t_game *game, int x, int draw_start, int draw_end)
+void	calcul_textre_x(t_raycast *rc, t_game *game)
 {
-	t_image		*texture;
+	if (rc->side == 0)
+		rc->wall_x = game->player.pos.y + rc->perp_wall_dist
+			* rc->ray_dir_y;
+	else
+		rc->wall_x = game->player.pos.x + rc->perp_wall_dist
+			* rc->ray_dir_x;
+	rc->wall_x -= floor(rc->wall_x);
+	rc->texture_x = (int)(rc->wall_x * (double)rc->tex_width);
+	if (rc->side == 0)
+	{
+		if (rc->ray_dir_x > 0)
+			rc->texture_x = rc->tex_width - rc->texture_x - 1;
+	}
+	else
+	{
+		if (rc->ray_dir_y < 0)
+			rc->texture_x = rc->tex_width - rc->texture_x - 1;
+	}
+}
+
+void	texture_wall(t_raycast *rc, t_game *game)
+{
+	if (rc->side == 0)
+	{
+		if (rc->ray_dir_x > 0)
+			rc->texture_data = mlx_get_data_addr(game->images[1].img_ptr,
+					&game->images[0].bpp, &game->images[0].line_length,
+					&game->images[0].endian);
+		else
+			rc->texture_data = mlx_get_data_addr(game->images[3].img_ptr,
+					&game->images[0].bpp, &game->images[0].line_length,
+					&game->images[0].endian);
+	}
+	else
+	{
+		if (rc->ray_dir_y > 0)
+			rc->texture_data = mlx_get_data_addr(game->images[2].img_ptr,
+					&game->images[0].bpp, &game->images[0].line_length,
+					&game->images[0].endian);
+		else
+			rc->texture_data = mlx_get_data_addr(game->images[0].img_ptr,
+					&game->images[0].bpp, &game->images[0].line_length,
+					&game->images[0].endian);
+	}
+}
+
+void	raycast_calcul(t_game *game)
+{
+	int			x;
 	int			y;
+	t_raycast	rc;
 
-	if (game->side == 0)
-		texture = (game->ray_dir_x > 0) ? &game->images[1] : &game->images[3];
-	else
-		texture = (game->ray_dir_y > 0) ? &game->images[2] : &game->images[0];
-
-	if (texture && texture->img_ptr)
+	rc.tex_width = 64;
+	rc.tex_height = 64;
+	rc.buffer = (int *)malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
+	if (!rc.buffer)
 	{
-		for (y = draw_start; y < draw_end; y++)
-			mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, texture->img_ptr, x, y);
+		perror("Erreur malloc");
+		free_all_exit(game, EXIT_FAILURE);
+		return ;
 	}
-	else
+	//mlx_clear_window(game->mlx_ptr, game->win_ptr);
+	ft_memset(rc.buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int)); // reset le buffer pour l'affichage
+	x = 0;
+	while (x < SCREEN_WIDTH)
 	{
-		ft_putstr_fd("Erreur de texture\n", 2);
+		calcul_ray_dir(&rc, game, x);
+		calcul_move_dist(&rc, game);
+		detect_collision(&rc, game);
+		calcul_wall_dist(&rc, game);
+		rc.line_height = (int)(SCREEN_HEIGHT / rc.perp_wall_dist);
+		rc.draw_start = -rc.line_height / 2 + SCREEN_HEIGHT / 2;
+		if (rc.draw_start < 0)
+			rc.draw_start = 0;
+		rc.draw_end = rc.line_height / 2 + SCREEN_HEIGHT / 2;
+		if (rc.draw_end >= SCREEN_HEIGHT)
+			rc.draw_end = SCREEN_HEIGHT - 1;
+		calcul_textre_x(&rc, game);
+		texture_wall(&rc, game);
+		//write(1, "a", 1);
+		y = 0;
+		while (y < rc.draw_start)
+		{
+			rc.buffer[y * SCREEN_WIDTH + x] = 0x0000FF; //changer avec map parse
+			y++;
+		}
+		y = rc.draw_start;
+		while (y < rc.draw_end)
+		{
+			rc.texture_y = ((y - SCREEN_HEIGHT / 2 + rc.line_height / 2)
+					* rc.tex_height) / rc.line_height;
+			rc.color = *(int *)(rc.texture_data + (rc.texture_y
+						* game->images[0].line_length
+						+ rc.texture_x * (game->images[0].bpp / 8)));
+			rc.buffer[y * SCREEN_WIDTH + x] = rc.color;
+			y++;
+		}
+		y = rc.draw_end;
+		while (y < SCREEN_HEIGHT)
+		{
+			rc.buffer[y * SCREEN_WIDTH + x] = 0x00FF00; //changer avec map parse
+			y++;
+		}
+		x++;
 	}
-}
-
-void		perform_raycasting(t_game *game)
-{
-	int		x;
-	double	camera_x;
-	double	ray_dir_x;
-	double	ray_dir_y;
-	int		draw_start;
-	int		draw_end;
-	int		line_height;
-	int		side;
-
-	for (x = 0; x < 800; x++) // Largeur de la fenêtre
-	{
-
-		camera_x = 2 * x / (double)800 - 1; // Coordonnée de la caméra
-		ray_dir_x = game->player.dir.x + game->player.plane.x * camera_x;
-		ray_dir_y = game->player.dir.y + game->player.plane.y * camera_x;
-
-		game->delta_dist_x = (ray_dir_x == 0) ? 1e30 : fabs(1 / ray_dir_x);
-		game->delta_dist_y = (ray_dir_y == 0) ? 1e30 : fabs(1 / ray_dir_y);
-
-		calculate_step_and_side_dist(game, ray_dir_x, ray_dir_y, &game->step_x, &game->step_y, 
-					&game->side_dist_x, &game->side_dist_y);
-
-		side = perform_dda(game, ray_dir_x, ray_dir_y, game->step_x, game->step_y);
-		if (side == -1)
-			continue;
-
-		calculate_wall_distance(game, ray_dir_x, ray_dir_y, side);
-
-		line_height = (int)(600 / game->perp_wall_dist);
-		draw_start = -line_height / 2 + 300;
-		draw_end = line_height / 2 + 300;
-		if (draw_start < 0)
-			draw_start = 0;
-		if (draw_end >= 600)
-			draw_end = 599;
-
-		draw_wall_slice(game, x, draw_start, draw_end);
-	}
+	rc.img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
+	rc.data = (int *)mlx_get_data_addr(rc.img, &game->images[0].bpp,
+			&game->images[0].line_length, &game->images[0].endian);
+	ft_memcpy(rc.data, rc.buffer, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, rc.img, 0, 0);
+	free(rc.buffer);
+	mlx_destroy_image(game->mlx_ptr, rc.img);
 }
