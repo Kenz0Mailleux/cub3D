@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:49:58 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/06 02:03:44 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/06 12:10:27 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 char *find_path_textures_in_file(char *str, t_game *game)
 {
-	int	i;
-	int	j;
-	char *str_path;
+	int		i;
+	int		j;
+	char	*str_path;
 
 	j = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (ft_is_space(str[i]))
+		if (ft_isspace(str[i]))
 			i++;
 		else
 		{
 			j = i;
-			while (str[i] && !ft_is_space(str[i]))
+			while (str[i] && !ft_isspace(str[i]))
 				i++;
 			
 			str_path = malloc(sizeof(char) * (i - j + 1));
@@ -38,7 +38,7 @@ char *find_path_textures_in_file(char *str, t_game *game)
 				perror("erreur malloc");
 				free_all_exit(game, EXIT_FAILURE);
 			}
-			while (str[i] && ft_is_space(str[i]))
+			while (str[i] && ft_isspace(str[i]))
 			{
 				ft_printf("%c", str[i]);
 				if (str[i] == '\n')
@@ -55,10 +55,12 @@ char *find_path_textures_in_file(char *str, t_game *game)
 
 char *find_path_color_in_file(char *str, t_game *game)
 {
-	int i = 0, start;
-	char *result;
+	int 	i;
+	char	*result;
+	int 	start;
 
-	while (str[i] && ft_is_space((unsigned char)str[i]))
+	i = 0;
+	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
 	start = i;
 	while (str[i] && ft_isdigit((unsigned char)str[i]))
@@ -68,7 +70,7 @@ char *find_path_color_in_file(char *str, t_game *game)
 		perror("Erreur : format de couleur invalide");
 		exit(1);
 	}
-	while (str[i] && ft_is_space((unsigned char)str[i]))
+	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
 	start = i;
 	while (str[i] && ft_isdigit((unsigned char)str[i]))
@@ -78,12 +80,12 @@ char *find_path_color_in_file(char *str, t_game *game)
 		perror("Erreur : format de couleur invalide");
 		exit(1);
 	}
-	while (str[i] && ft_is_space((unsigned char)str[i]))
+	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
 	start = i;
 	while (str[i] && ft_isdigit((unsigned char)str[i]))
 		i++;
-	while (str[i] && ft_is_space((unsigned char)str[i]))
+	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
 	if (start == i || str[i] != '\0')
 	{
@@ -97,5 +99,5 @@ char *find_path_color_in_file(char *str, t_game *game)
 		exit(1);
 		free_all_exit(game, EXIT_FAILURE);
 	}
-	return result;
+	return (result);
 }

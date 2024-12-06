@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:41 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/06 03:00:38 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/06 12:33:47 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	handle_movement(int keycode, t_game *game)
 {
 	if (keycode == KEY_Z)
 	{
-		ft_printf("%d", keycode);
 		if (game->map->data[(int)(game->player.pos.y)]
 			[(int)(game->player.pos.x + game->player.dir.x * MOVE_SPEED)] == 0)
 			game->player.pos.x += game->player.dir.x * MOVE_SPEED;
@@ -98,6 +97,8 @@ int	handle_rotation(int keycode, t_game *game)
 
 int	handle_keypress(int keycode, t_game *game)
 {
+	printf("%f ", game->player.pos.y);
+	printf("%f\n", game->player.pos.x);
 	if (keycode == KEY_ESCAPE)
 		free_all_exit(game, EXIT_FAILURE);
 	handle_movement(keycode, game);

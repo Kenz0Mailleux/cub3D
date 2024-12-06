@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:08 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/06 03:03:58 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/06 12:38:52 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void parse_texture_line(t_map *map, char *line, t_game *game, int id, cha
 	int j;
 
 	j = 0;
-	while (ft_is_space(line[j]))
+	while (ft_isspace(line[j]))
 		j++;
 	if (ft_strncmp(&line[j], identifier, ft_strlen(identifier)) == 0)
 	{
@@ -160,6 +160,7 @@ static void	fill_map_cell(t_game *game, t_map *map, char c, int x, int y)
 	else if (ft_strchr("NESW", c))
 	{
 		parse_player(game, map, x, y, c);
+		map->data[y][x] = 2;
 	}
 	else
 		map->data[y][x] = 0;
@@ -187,6 +188,9 @@ static void	populate_map_data(char **map_str,
 		y++;
 		i++;
 	}
+	ft_printf("%d", game->player.pos.y);
+	ft_printf("%d", game->player.pos.x);
+	print_map(map);
 }
 
 static void	verify_player_initialised(t_game *game)
@@ -223,6 +227,5 @@ t_map	*parse_map(char *filename, t_game *game)
 	map->ceiling_color = parse_color(map->image[5].path);
 	populate_map_data(map_str, map, game, start_index);
 	verify_player_initialised(game);
-	//parse_and_validate_map(game->map->data, game);
 	return (map);
 }

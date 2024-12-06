@@ -6,13 +6,13 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:38:13 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/06 02:09:01 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/06 12:06:34 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3D.h"
 
-int ft_is_space(char c)
+int ft_isspace(char c)
 {
     return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r');
 }
@@ -28,7 +28,7 @@ int check_strings(char **array)
 		j = 0;
 		while (array[i][j] != '\0')
 		{ 
-			if (!ft_is_space(array[i][j]))
+			if (!ft_isspace(array[i][j]))
 			{
 				return (i);
 			}

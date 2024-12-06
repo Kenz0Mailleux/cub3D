@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:48:16 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/06 02:58:49 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/06 12:40:06 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ t_game *init_game(char *path, int width, int height, char *title)
 	t_game *game;
 
 	game = malloc(sizeof(t_game));
+	game->player.initialised = 0;
+	game->map = parse_map(path, game);
+	game->player.pos.x += 0.5;
+	game->player.pos.y += 0.5;
+	check_map_closed(game);
 	if (!game)
 		free_all_exit(game, EXIT_FAILURE);
 	game->mlx_ptr = mlx_init();
@@ -76,10 +81,6 @@ t_game *init_game(char *path, int width, int height, char *title)
 	game->win_ptr = mlx_new_window(game->mlx_ptr, width, height, title);
 	if (!game->win_ptr)
 		free_all_exit(game, EXIT_FAILURE);
-	game->player.initialised = 0;
-	game->map = parse_map(path, game);
-	game->player.pos.x += 0.5;
-	game->player.pos.y += 0.5;
 	init_image_paths(game);
 	load_textures(game, width, height);
 	return (game);
