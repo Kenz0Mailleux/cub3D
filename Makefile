@@ -1,5 +1,9 @@
 NAME = cub3D
-SRC = cub3D.c init.c map_parse.c raycast.c
+SRC = srcs/cub3D.c srcs/init.c srcs/utils.c\
+		srcs/map_parse/file_parse.c srcs/map_parse/map_parse.c srcs/map_parse/map_memory.c srcs/map_parse/parse_color.c srcs/map_parse/map_algo.c\
+		srcs/raycast/raycast.c 
+
+
 OBJ = $(SRC:%.c=%.o)
 
 MODULE = libft/libft.a

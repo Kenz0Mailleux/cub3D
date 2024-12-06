@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:08 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 18:57:40 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/06 03:06:08 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_map
     int 	**data;
     int 	width;
     int 	height;
+	int 	ground_color;
+	int		ceiling_color;
 	t_image	image[6];
 } t_map;
 
@@ -115,6 +117,9 @@ typedef struct s_game
     t_player player;
     int     map_width;
     int     map_height;
+	int		player_x;
+	int		player_y;
+	int		player_found;
     t_map   *map;
 } t_game;
 
@@ -133,4 +138,21 @@ void render_wall_slice(t_game *game, t_raycast *rc, int *buffer, int x);
 void render_to_window(t_game *game, int *buffer);
 
 
+
+char *find_path_textures_in_file(char *str, t_game *game);
+int parse_color(const char *str);
+char *find_path_color_in_file(char *str, t_game *game);
+
+void	parse_and_validate_map(int **map, t_game *game);
+/*map memory*/
+void init_map_image_path(t_map *map);
+int	map_alloc_size(const char *filename);
+int **allocate_map(int width, int height, t_game *game);
+void free_map(int **map, int height);
+char	**init_map_str(const char *filename);
+
+/*utils*/
+int ft_is_space(char c);
+int check_strings(char **array);
+int convert_to_hex_color(int r, int g, int b);
 #endif

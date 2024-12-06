@@ -6,11 +6,11 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:52:27 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/01 23:39:26 by kenzo            ###   ########.fr       */
+/*   Updated: 2024/12/06 01:58:23 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../../cub3D.h"
 
 void	calcul_ray_dir(t_raycast *rc, t_game *game, int x)
 {
@@ -146,8 +146,7 @@ void	raycast_calcul(t_game *game)
 		free_all_exit(game, EXIT_FAILURE);
 		return ;
 	}
-	//mlx_clear_window(game->mlx_ptr, game->win_ptr);
-	ft_memset(rc.buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int)); // reset le buffer pour l'affichage
+	ft_memset(rc.buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
 	x = 0;
 	while (x < SCREEN_WIDTH)
 	{
@@ -164,11 +163,10 @@ void	raycast_calcul(t_game *game)
 			rc.draw_end = SCREEN_HEIGHT - 1;
 		calcul_textre_x(&rc, game);
 		texture_wall(&rc, game);
-		//write(1, "a", 1);
 		y = 0;
 		while (y < rc.draw_start)
 		{
-			rc.buffer[y * SCREEN_WIDTH + x] = 0x0000FF; //changer avec map parse
+			rc.buffer[y * SCREEN_WIDTH + x] = game->map->ceiling_color;
 			y++;
 		}
 		y = rc.draw_start;
@@ -185,7 +183,7 @@ void	raycast_calcul(t_game *game)
 		y = rc.draw_end;
 		while (y < SCREEN_HEIGHT)
 		{
-			rc.buffer[y * SCREEN_WIDTH + x] = 0x00FF00; //changer avec map parse
+			rc.buffer[y * SCREEN_WIDTH + x] = game->map->ground_color;
 			y++;
 		}
 		x++;

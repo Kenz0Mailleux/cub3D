@@ -3,35 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:48:16 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 19:26:19 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/06 02:58:49 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "../cub3D.h"
 
 void init_image_paths(t_game *game)
 {
-	game->images[0].path = "image/north.xpm";
-	game->images[1].path = "image/east.xpm";
-	game->images[2].path = "image/south.xpm";
-	game->images[3].path = "image/west.xpm";
+	game->images[0].path = game->map->image[0].path;
+	game->images[1].path = game->map->image[1].path;
+	game->images[2].path = game->map->image[2].path;
+	game->images[3].path = game->map->image[3].path;
 }
 
 void load_textures(t_game *game, int width, int height)
 {
-	game->images[0].img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, game->images[0].path, &width, &height);
+	game->images[0].img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, game->map->image[0].path, &width, &height);
 	if (!game->images[0].img_ptr)
 		free_all_exit(game, EXIT_FAILURE);
-	game->images[1].img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, game->images[1].path, &width, &height);
+	game->images[1].img_ptr = mlx_xpm_file_to_image(game->mlx_ptr,  game->map->image[1].path, &width, &height);
 	if (!game->images[1].img_ptr)
 		free_all_exit(game, EXIT_FAILURE);
-	game->images[2].img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, game->images[2].path, &width, &height);
+	game->images[2].img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, game->map->image[2].path, &width, &height);
 	if (!game->images[2].img_ptr)
 		free_all_exit(game, EXIT_FAILURE);
-	game->images[3].img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, game->images[3].path, &width, &height);
+	game->images[3].img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, game->map->image[3].path, &width, &height);
 	if (!game->images[3].img_ptr)
 		free_all_exit(game, EXIT_FAILURE);
 	
@@ -63,30 +63,6 @@ void	fill_image(void *img_ptr, int width, int height, int color)
 	}
 }
 
-void	load_floor_and_ceiling(t_game *game, int width, int height,
-		int floor_color, int ceiling_color)
-{
-	game->images[4].img_ptr = mlx_new_image(game->mlx_ptr, width, height);
-	if (!game->images[4].img_ptr)
-		free_all_exit(game, EXIT_FAILURE);
-	fill_image(game->images[4].img_ptr, width, height, floor_color);
-	game->images[5].img_ptr = mlx_new_image(game->mlx_ptr, width, height);
-	if (!game->images[5].img_ptr)
-		free_all_exit(game, EXIT_FAILURE);
-	fill_image(game->images[5].img_ptr, width, height, ceiling_color);
-}
-
-
-void	load_images(t_game *game, int width, int height,
-		int floor_color, int ceiling_color)
-{
-	load_textures(game, width, height);
-	(void)ceiling_color;
-	(void)floor_color;
-	//load_floor_and_ceiling(game, width, height, floor_color, ceiling_color);
-}
-
-
 t_game *init_game(char *path, int width, int height, char *title)
 {
 	t_game *game;
@@ -105,6 +81,6 @@ t_game *init_game(char *path, int width, int height, char *title)
 	game->player.pos.x += 0.5;
 	game->player.pos.y += 0.5;
 	init_image_paths(game);
-	load_images(game, width, height, 0x87CEEB, 0x00FF7F);
+	load_textures(game, width, height);
 	return (game);
 }

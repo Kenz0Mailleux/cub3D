@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:41 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/04 18:57:07 by kmailleu         ###   ########.fr       */
+/*   Updated: 2024/12/06 03:00:38 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "cub3D.h"
+#include "../cub3D.h"
 
 void	free_all_exit(t_game *game, int succes)
 {
 	int	i;
 
 	i = 0;
+
+	ft_printf("Free error");
 	if (game)
 	{
 		if (game->mlx_ptr)
@@ -49,6 +50,7 @@ int	handle_movement(int keycode, t_game *game)
 {
 	if (keycode == KEY_Z)
 	{
+		ft_printf("%d", keycode);
 		if (game->map->data[(int)(game->player.pos.y)]
 			[(int)(game->player.pos.x + game->player.dir.x * MOVE_SPEED)] == 0)
 			game->player.pos.x += game->player.dir.x * MOVE_SPEED;
@@ -96,7 +98,6 @@ int	handle_rotation(int keycode, t_game *game)
 
 int	handle_keypress(int keycode, t_game *game)
 {
-	ft_printf("%d", keycode);
 	if (keycode == KEY_ESCAPE)
 		free_all_exit(game, EXIT_FAILURE);
 	handle_movement(keycode, game);
@@ -120,7 +121,6 @@ void	start_loop(t_game *game)
 	mlx_hook(game->win_ptr, 2, 1L << 0, &handle_keypress, game);
 	//mlx_hook(game->win_ptr, MLX_KEY_RELEASE, 1L << 1, &handle_keyrelease, game);
 	mlx_hook(game->win_ptr, 17, 0L, &close_window, game);
-
 	mlx_loop(game->mlx_ptr);
 }
 
