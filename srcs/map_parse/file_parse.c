@@ -6,19 +6,32 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:49:58 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/06 12:10:27 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/18 04:53:47 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
 
-char *find_path_textures_in_file(char *str, t_game *game)
+char	*extract_texture_path(char *str, int start, int end, t_game *game)
+{
+	char	*str_path;
+
+	str_path = malloc(sizeof(char) * (end - start + 1));
+	if (!str_path)
+	{
+		perror("Erreur malloc");
+		free_all_exit(game, EXIT_FAILURE);
+	}
+	str_path = ft_strncpy_gnl(str_path, &str[start], end - start);
+	return (str_path);
+}
+
+char	*find_path_textures_in_file(char *str, t_game *game)
 {
 	int		i;
 	int		j;
 	char	*str_path;
 
-	j = 0;
 	i = 0;
 	while (str[i])
 	{
@@ -29,74 +42,71 @@ char *find_path_textures_in_file(char *str, t_game *game)
 			j = i;
 			while (str[i] && !ft_isspace(str[i]))
 				i++;
-			
-			str_path = malloc(sizeof(char) * (i - j + 1));
-			str_path = ft_strncpy_gnl(str_path, &str[j], i - j);
-			ft_printf(str_path);
-			if (!str_path)
-			{
-				perror("erreur malloc");
-				free_all_exit(game, EXIT_FAILURE);
-			}
+			str_path = extract_texture_path(str, j, i, game);
 			while (str[i] && ft_isspace(str[i]))
 			{
-				ft_printf("%c", str[i]);
 				if (str[i] == '\n')
 					return (str_path);
 				i++;
 			}
-			ft_printf("%c", str[i]);
-			exit (1);
 			free_all_exit(game, EXIT_FAILURE);
 		}
 	}
 	return (NULL);
 }
 
-char *find_path_color_in_file(char *str, t_game *game)
+int	skip_digits_and_comma(char *str, int i)
 {
-	int 	i;
-	char	*result;
-	int 	start;
+	if (!ft_isdigit((unsigned char)str[i]))
+		return (-1);
+	while (str[i] && ft_isdigit((unsigned char)str[i]))
+		i++;
+	if (str[i++] != ',')
+		return (-1);
+	return (i);
+}
+
+int	validate_color_format(char *str)
+{
+	int	i;
 
 	i = 0;
 	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
-	start = i;
-	while (str[i] && ft_isdigit((unsigned char)str[i]))
-		i++;
-	if (start == i || str[i++] != ',')
-	{
-		perror("Erreur : format de couleur invalide");
-		exit(1);
-	}
+	i = skip_digits_and_comma(str, i);
+	if (i == -1)
+		return (-1);
 	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
-	start = i;
-	while (str[i] && ft_isdigit((unsigned char)str[i]))
-		i++;
-	if (start == i || str[i++] != ',')
-	{
-		perror("Erreur : format de couleur invalide");
-		exit(1);
-	}
+	i = skip_digits_and_comma(str, i);
+	if (i == -1)
+		return (-1);
 	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
-	start = i;
+	if (!ft_isdigit((unsigned char)str[i]))
+		return (-1);
 	while (str[i] && ft_isdigit((unsigned char)str[i]))
 		i++;
 	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
-	if (start == i || str[i] != '\0')
+	if (str[i] != '\0')
+		return (-1);
+	return (0);
+}
+
+char	*find_path_color_in_file(char *str, t_game *game)
+{
+	char	*result;
+
+	if (validate_color_format(str) == -1)
 	{
 		perror("Erreur : format de couleur invalide");
-		exit(1);
+		free_all_exit(game, EXIT_FAILURE);
 	}
 	result = ft_strdup(str);
 	if (!result)
 	{
 		perror("Erreur : allocation mémoire échouée");
-		exit(1);
 		free_all_exit(game, EXIT_FAILURE);
 	}
 	return (result);

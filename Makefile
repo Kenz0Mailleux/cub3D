@@ -1,7 +1,8 @@
 NAME = cub3D
-SRC = srcs/cub3D.c srcs/init.c srcs/utils.c\
-		srcs/map_parse/file_parse.c srcs/map_parse/map_parse.c srcs/map_parse/map_memory.c srcs/map_parse/parse_color.c srcs/map_parse/map_algo.c\
-		srcs/raycast/raycast.c 
+SRC = srcs/cub3D.c srcs/init.c srcs/utils.c srcs/handler.c\
+		srcs/map_parse/file_parse.c srcs/map_parse/map_parse.c srcs/map_parse/map_parse2.c srcs/map_parse/map_parse3.c srcs/map_parse/map_parse4.c \
+		 srcs/map_parse/map_memory.c srcs/map_parse/parse_color.c srcs/map_parse/map_algo.c \
+		srcs/raycast/raycast.c srcs/raycast/raycast2.c srcs/raycast/raycast3.c  
 
 
 OBJ = $(SRC:%.c=%.o)
@@ -15,7 +16,7 @@ LFLAGS = -L./minilibx -lmlx -lm -lX11 -lXext -g3 -finline-functions -ffast-math 
 all: $(MODULE) $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(MODULE) $(LFLAGS) -o $(NAME)
+	$(CC) $(OBJ) $(MODULE)  $(LFLAGS) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

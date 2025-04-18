@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 15:52:27 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/06 01:58:23 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/03/18 19:14:40 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,96 +103,4 @@ void	calcul_textre_x(t_raycast *rc, t_game *game)
 		if (rc->ray_dir_y < 0)
 			rc->texture_x = rc->tex_width - rc->texture_x - 1;
 	}
-}
-
-void	texture_wall(t_raycast *rc, t_game *game)
-{
-	if (rc->side == 0)
-	{
-		if (rc->ray_dir_x > 0)
-			rc->texture_data = mlx_get_data_addr(game->images[1].img_ptr,
-					&game->images[0].bpp, &game->images[0].line_length,
-					&game->images[0].endian);
-		else
-			rc->texture_data = mlx_get_data_addr(game->images[3].img_ptr,
-					&game->images[0].bpp, &game->images[0].line_length,
-					&game->images[0].endian);
-	}
-	else
-	{
-		if (rc->ray_dir_y > 0)
-			rc->texture_data = mlx_get_data_addr(game->images[2].img_ptr,
-					&game->images[0].bpp, &game->images[0].line_length,
-					&game->images[0].endian);
-		else
-			rc->texture_data = mlx_get_data_addr(game->images[0].img_ptr,
-					&game->images[0].bpp, &game->images[0].line_length,
-					&game->images[0].endian);
-	}
-}
-
-void	raycast_calcul(t_game *game)
-{
-	int			x;
-	int			y;
-	t_raycast	rc;
-
-	rc.tex_width = 64;
-	rc.tex_height = 64;
-	rc.buffer = (int *)malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
-	if (!rc.buffer)
-	{
-		perror("Erreur malloc");
-		free_all_exit(game, EXIT_FAILURE);
-		return ;
-	}
-	ft_memset(rc.buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
-	x = 0;
-	while (x < SCREEN_WIDTH)
-	{
-		calcul_ray_dir(&rc, game, x);
-		calcul_move_dist(&rc, game);
-		detect_collision(&rc, game);
-		calcul_wall_dist(&rc, game);
-		rc.line_height = (int)(SCREEN_HEIGHT / rc.perp_wall_dist);
-		rc.draw_start = -rc.line_height / 2 + SCREEN_HEIGHT / 2;
-		if (rc.draw_start < 0)
-			rc.draw_start = 0;
-		rc.draw_end = rc.line_height / 2 + SCREEN_HEIGHT / 2;
-		if (rc.draw_end >= SCREEN_HEIGHT)
-			rc.draw_end = SCREEN_HEIGHT - 1;
-		calcul_textre_x(&rc, game);
-		texture_wall(&rc, game);
-		y = 0;
-		while (y < rc.draw_start)
-		{
-			rc.buffer[y * SCREEN_WIDTH + x] = game->map->ceiling_color;
-			y++;
-		}
-		y = rc.draw_start;
-		while (y < rc.draw_end)
-		{
-			rc.texture_y = ((y - SCREEN_HEIGHT / 2 + rc.line_height / 2)
-					* rc.tex_height) / rc.line_height;
-			rc.color = *(int *)(rc.texture_data + (rc.texture_y
-						* game->images[0].line_length
-						+ rc.texture_x * (game->images[0].bpp / 8)));
-			rc.buffer[y * SCREEN_WIDTH + x] = rc.color;
-			y++;
-		}
-		y = rc.draw_end;
-		while (y < SCREEN_HEIGHT)
-		{
-			rc.buffer[y * SCREEN_WIDTH + x] = game->map->ground_color;
-			y++;
-		}
-		x++;
-	}
-	rc.img = mlx_new_image(game->mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT);
-	rc.data = (int *)mlx_get_data_addr(rc.img, &game->images[0].bpp,
-			&game->images[0].line_length, &game->images[0].endian);
-	ft_memcpy(rc.data, rc.buffer, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, rc.img, 0, 0);
-	free(rc.buffer);
-	mlx_destroy_image(game->mlx_ptr, rc.img);
 }

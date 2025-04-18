@@ -6,49 +6,49 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:17:18 by kenzo             #+#    #+#             */
-/*   Updated: 2024/12/06 12:37:12 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/18 04:53:57 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cub3D.h"
 
-void	dfs(int x, int y, int **map, int width, int height, int visited[height][width])
+void	dfs(t_vector pos, t_vector size, int **map, \
+	int visited[(int)size.y][(int)size.x])
 {
-	if (x < 0 || x >= width || y < 0 || y >= height)
+	if (pos.x < 0 || pos.x >= size.x || pos.y < 0 || pos.y >= size.y)
 	{
 		write(2, "Error\nMap is open\n", 18);
 		exit(1);
 	}
-	if (visited[y][x] || (map[y][x] != 0 && map[y][x] != 2))
+	if (visited[(int)pos.y][(int)pos.x] || \
+		(map[(int)pos.y][(int)pos.x] != 0 && map[(int)pos.y][(int)pos.x] != 2))
 		return ;
-	visited[y][x] = 1;
-	dfs(x + 1, y, map, width, height, visited);
-	dfs(x - 1, y, map, width, height, visited);
-	dfs(x, y + 1, map, width, height, visited);
-	dfs(x, y - 1, map, width, height, visited);
+	visited[(int)pos.y][(int)pos.x] = 1;
+	dfs((t_vector){pos.x + 1, pos.y}, size, map, visited);
+	dfs((t_vector){pos.x - 1, pos.y}, size, map, visited);
+	dfs((t_vector){pos.x, pos.y + 1}, size, map, visited);
+	dfs((t_vector){pos.x, pos.y - 1}, size, map, visited);
 }
 
 void	check_map_closed(t_game *game)
 {
-	int	**map;
-	int	width;
-	int	height;
-	int	visited[game->map->height][game->map->width];
-	int	player_x;
-	int	player_y;
+	int			**map;
+	int			visited[game->map->height][game->map->width];
+	t_vector	pos;
+	t_vector	size;
 
 	map = game->map->data;
-	width = game->map->width;
-	height = game->map->height;
+	size.x = game->map->width;
+	size.y = game->map->height;
 	memset(visited, 0, sizeof(visited));
-	player_x = (int)game->player.pos.x;
-	player_y = (int)game->player.pos.y;
-	if (player_x < 0 || player_x >= width || player_y < 0 || player_y >= height
-		|| map[player_y][player_x] != 2)
+	pos.x = (int)game->player.pos.x;
+	pos.y = (int)game->player.pos.y;
+	if (pos.x < 0 || pos.x >= size.x || pos.y < 0 || pos.y >= size.y
+		|| map[(int)pos.y][(int)pos.x] != 2)
 	{
 		write(2, "Error\nInvalid player position\n", 30);
-		exit(1);
+		free_all_exit(game, EXIT_FAILURE);
 	}
-	dfs(player_x, player_y, map, width, height, visited);
-	game->map->data[player_y][player_x] = 0;
+	dfs(pos, size, map, visited);
+	game->map->data[(int)pos.y][(int)pos.x] = 0;
 }
