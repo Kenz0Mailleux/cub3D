@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:41 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/18 05:36:03 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/18 05:57:59 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	free_all_exit(t_game *game, int succes)
 			mlx_destroy_display(game->mlx_ptr);
 			free(game->mlx_ptr);
 		}
-		//free_map(game->map->data, game->map->height);
 		free(game->map);
 		free(game);
 	}

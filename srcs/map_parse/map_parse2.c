@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:05:54 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/18 05:03:18 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/18 05:58:18 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	find_map_start(char **map_str, int i)
 	start = i;
 	while (map_str[i])
 	{
-		//printf("%s", map_str[i]);
 		if (!map_str[i] || !ft_is_map_line(map_str[i]))
 		{
 			perror("Erreur : Ligne invalide");
@@ -63,7 +62,6 @@ int	find_map_start(char **map_str, int i)
 	}
 	return (start);
 }
-
 
 int	parse_file(t_map *map, char **map_str, t_game *game)
 {
@@ -86,7 +84,6 @@ int	parse_file(t_map *map, char **map_str, t_game *game)
 	free_all_exit(game, EXIT_FAILURE);
 	return (0);
 }
-
 
 t_map	*init_map_struct(void)
 {

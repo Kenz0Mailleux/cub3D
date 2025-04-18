@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:48:16 by kenzo             #+#    #+#             */
-/*   Updated: 2025/03/17 15:21:02 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/18 06:03:50 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ t_game	*init_game(char *path, int width, int height, char *title)
 	t_game	*game;
 
 	game = malloc(sizeof(t_game));
+	if (!game)
+		free_all_exit(game, EXIT_FAILURE);
 	game->player.initialised = 0;
 	game->map = parse_map(path, game);
 	game->player.pos.x += 0.5;
 	game->player.pos.y += 0.5;
 	check_map_closed(game);
-	if (!game)
-		free_all_exit(game, EXIT_FAILURE);
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
 		free_all_exit(game, EXIT_FAILURE);

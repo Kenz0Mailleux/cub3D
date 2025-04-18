@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:42:36 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/18 05:33:30 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/18 05:57:35 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	**allocate_map(int width, int height, t_game *game)
 			while (i-- > 0)
 				free(map[i]);
 			free(map);
-
 			free_all_exit(game, EXIT_FAILURE);
 		}
 		i++;
@@ -56,7 +55,7 @@ void	free_map(int **map, int height)
 	int	i;
 
 	if (!map)
-		return;
+		return ;
 	i = 0;
 	while (i < height)
 	{

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 20:07:19 by kenzo             #+#    #+#             */
-/*   Updated: 2025/03/17 15:27:46 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/18 06:02:24 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	handle_rotation(int keycode, t_game *game)
 
 int	handle_keypress(int keycode, t_game *game)
 {
-	printf("%f ", game->player.pos.y);
-	printf("%f\n", game->player.pos.x);
 	if (keycode == KEY_ESCAPE)
 		free_all_exit(game, EXIT_FAILURE);
 	handle_movement(keycode, game);
