@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:49:58 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 06:10:33 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*extract_texture_path(char *str, int start, int end, t_game *game)
 	str_path = malloc(sizeof(char) * (end - start + 1));
 	if (!str_path)
 	{
-		ft_printf("Erreur malloc");
+		ft_printf("Erreur malloc\n");
 		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 	ft_strncpy_cb(str_path, &str[start], end - start);

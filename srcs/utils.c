@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:38:13 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:42:06 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 06:10:41 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	check_strings(char **array)
 	return (-1);
 }
 
-int	convert_to_hex_color(int r, int g, int b)
+int	convert_to_hex_color(t_game *game, int r, int g, int b)
 {
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
-		ft_printf("Erreur : Valeur RGB invalide");
-		exit(EXIT_FAILURE);
+		ft_printf("Erreur : Valeur RGB invalide\n");
+		free_all_exit(game, EXIT_FAILURE, 0);
 	}
 	return ((r << 16) | (g << 8) | b);
 }

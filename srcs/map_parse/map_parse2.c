@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:05:54 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:43:35 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 06:10:14 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	find_map_start(t_game *game, char **map_str, int i)
 	{
 		if (!map_str[i])
 		{
-			ft_printf("Ligne invalide");
+			ft_printf("Ligne invalide\n");
 			free_all_exit(game, EXIT_FAILURE, 0);
 		}
 		if (!ft_is_map_line(map_str[i]))
 		{
-			ft_printf("Ligne invalide");
+			ft_printf("Ligne invalide\n");
 			free_all_exit(game, EXIT_FAILURE, 0);
 		}
 		i++;
@@ -74,7 +74,7 @@ int	parse_file(t_map *map, char **map_str, t_game *game)
 
 	if (!map_str)
 	{
-		ft_printf("Map inexistante");
+		ft_printf("Map inexistante\n");
 		free_all_exit(game, EXIT_FAILURE, 0);
 	}
 	i = 0;
@@ -85,7 +85,7 @@ int	parse_file(t_map *map, char **map_str, t_game *game)
 		if (found_all(map))
 			return (find_map_start(game, map_str, i));
 	}
-	ft_printf("Erreur : Textures manquantes ou incomplètes");
+	ft_printf("Erreur : Textures manquantes ou incomplètes\n");
 	free_all_exit(game, EXIT_FAILURE, 1);
 	return (0);
 }
@@ -97,7 +97,7 @@ t_map	*init_map_struct(void)
 	map = malloc(sizeof(t_map));
 	if (!map)
 	{
-		ft_printf("Erreur malloc");
+		ft_printf("Erreur malloc\n");
 		exit(EXIT_FAILURE);
 	}
 	init_map_image_path(map);

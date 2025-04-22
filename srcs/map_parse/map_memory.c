@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:42:36 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 06:10:27 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	**allocate_map(int width, int height, t_game *game)
 	map = (int **)malloc(sizeof(int *) * height);
 	if (!map)
 	{
-		ft_printf("Erreur d'allocation de la carte");
+		ft_printf("Erreur d'allocation de la carte\n");
 		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 	i = 0;
@@ -39,7 +39,7 @@ int	**allocate_map(int width, int height, t_game *game)
 		map[i] = (int *)malloc(sizeof(int) * width);
 		if (!map[i])
 		{
-			ft_printf("Erreur d'allocation d'une ligne de la carte");
+			ft_printf("Erreur d'allocation d'une ligne de la carte\n");
 			while (i-- > 0)
 				free(map[i]);
 			free(map);

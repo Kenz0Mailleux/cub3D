@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:08 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:32:35 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 06:12:18 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	render_wall_slice(t_game *game, t_raycast *rc, int *buffer, int x);
 void	render_to_window(t_game *game, int *buffer);
 void	check_map_closed(t_game *game);
 char	*find_path_textures_in_file(char *str, t_game *game);
-int		parse_color(const char *str);
+int		parse_color( t_game *game, const char *str);
 char	*find_path_color_in_file(char *str, t_game *game);
 void	parse_and_validate_map(int **map, t_game *game);
 
@@ -202,6 +202,6 @@ char	**init_map_str(const char *filename);
 /*utils*/
 int		ft_isspace(char c);
 int		check_strings(char **array);
-int		convert_to_hex_color(int r, int g, int b);
+int		convert_to_hex_color(t_game *game, int r, int g, int b);
 char	*ft_strncpy_cb(char *dest, char *src, int n);
 #endif

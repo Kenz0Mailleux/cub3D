@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:05:58 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 06:09:56 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	verify_player_initialised(t_game *game)
 {
 	if (!game->player.initialised)
 	{
-		ft_printf("Erreur : Joueur manquant");
+		ft_printf("Erreur : Joueur manquant\n");
 		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 }
@@ -89,15 +89,15 @@ t_map	*parse_map(char *filename, t_game *game)
 	start_index += check_strings(&map_str[start_index]);
 	if (start_index == -1)
 	{
-		ft_printf("Erreur : map invalide");
+		ft_printf("Erreur : map invalide\n");
 		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 	calculate_map_dimensions(map_str, &width, &height, start_index);
 	map->data = allocate_map(width, height, game);
 	map->width = width;
 	map->height = height;
-	map->ground_color = parse_color(map->image[4].path);
-	map->ceiling_color = parse_color(map->image[5].path);
+	map->ground_color = parse_color(game, map->image[4].path);
+	map->ceiling_color = parse_color(game, map->image[5].path);
 	populate_map_data(map_str, map, game, start_index);
 	verify_player_initialised(game);
 	free_map_str(map_str);

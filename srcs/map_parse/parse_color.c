@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:40:38 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 06:09:37 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	extract_color_value(const char *str, int *i)
 	return (value);
 }
 
-int	parse_color(const char *str)
+int	parse_color( t_game *game, const char *str)
 {
 	int	i;
 	int	r;
@@ -34,14 +34,14 @@ int	parse_color(const char *str)
 	i = 0;
 	r = extract_color_value(str, &i);
 	if (str[i++] != ',')
-		return (ft_printf("Erreur : Format invalide"), exit(EXIT_FAILURE), 0);
+		return (ft_printf("Erreur : Format invalide\n"), exit(EXIT_FAILURE), 0);
 	g = extract_color_value(str, &i);
 	if (str[i++] != ',')
-		return (ft_printf("Erreur : Format invalide"), exit(EXIT_FAILURE), 0);
+		return (ft_printf("Erreur : Format invalide\n"), exit(EXIT_FAILURE), 0);
 	b = extract_color_value(str, &i);
 	while (str[i] && ft_isspace((unsigned char)str[i]))
 		i++;
 	if (str[i] != '\0')
-		return (ft_printf("Erreur : Format invalide"), exit(EXIT_FAILURE), 0);
-	return (convert_to_hex_color(r, g, b));
+		return (ft_printf("Erreur : Format invalide\n"), exit(EXIT_FAILURE), 0);
+	return (convert_to_hex_color(game, r, g, b));
 }
