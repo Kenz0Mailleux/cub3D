@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:17:18 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/18 06:01:25 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 05:32:19 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,13 @@ void	check_map_closed(t_game *game)
 		|| map[(int)pos.y][(int)pos.x] != 2)
 	{
 		write(2, "Error\nInvalid player position\n", 30);
-		free_all_exit(game, EXIT_FAILURE);
+		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 	visited = allocate_visited(size.y, size.x);
 	if (!visited)
 	{
 		write(2, "Error\nMalloc failed\n", 21);
-		free_all_exit(game, EXIT_FAILURE);
+		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 	dfs(pos, size, map, visited);
 	free_visited(visited, size.y);

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:08 by kenzo             #+#    #+#             */
-/*   Updated: 2025/03/18 19:55:07 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 05:32:35 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 # define ROT_SPEED 0.05
 # define MAP_WIDTH 16
 # define MAP_HEIGHT 6
+
+typedef struct s_dir_parse	t_dir_parse;
 
 typedef struct s_fill
 {
@@ -118,6 +120,7 @@ typedef struct s_game
 	int			player_y;
 	int			player_found;
 	t_map		*map;
+	t_dir_parse	*parse;
 }	t_game;
 
 typedef struct s_dir_parse
@@ -134,7 +137,7 @@ int		handle_keypress(int keycode, t_game *game);
 t_map	*parse_map(char *filename, t_game *game);
 t_game	*init_game(char *path, int width, int height, char *title);
 void	free_map(int **map, int height);
-void	free_all_exit(t_game *game, int succes);
+void	free_all_exit(t_game *game, int succes, int free_mlx);
 void	calculate_wall_distance(t_game *game, t_raycast *rc);
 void	render_wall_slice(t_game *game, t_raycast *rc, int *buffer, int x);
 void	render_to_window(t_game *game, int *buffer);
@@ -146,13 +149,14 @@ void	parse_and_validate_map(int **map, t_game *game);
 
 /*map parse*/
 int		found_all(t_map *map);
-int		parse_texture_line(t_dir_parse *parse, char *line, int id, char *identifier);
+int		parse_texture_line(t_dir_parse *parse, char *line, \
+int id, char *identifier);
 void	parse_line(t_map *map, char *line, t_game *game);
 int		ft_isempty_line(char *line);
 int		ft_is_map_line(char *line);
 
 /*map parse2*/
-int		find_map_start(char **map_str, int i);
+int		find_map_start(t_game *game, char **map_str, int i);
 int		parse_file(t_map *map, char **map_str, t_game *game);
 t_map	*init_map_struct(void);
 void	calculate_map_dimensions(char **map_str, int *width,
@@ -199,4 +203,5 @@ char	**init_map_str(const char *filename);
 int		ft_isspace(char c);
 int		check_strings(char **array);
 int		convert_to_hex_color(int r, int g, int b);
+char	*ft_strncpy_cb(char *dest, char *src, int n);
 #endif

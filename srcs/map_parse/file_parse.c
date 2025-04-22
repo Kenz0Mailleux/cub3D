@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:49:58 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/18 04:53:47 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*extract_texture_path(char *str, int start, int end, t_game *game)
 	str_path = malloc(sizeof(char) * (end - start + 1));
 	if (!str_path)
 	{
-		perror("Erreur malloc");
-		free_all_exit(game, EXIT_FAILURE);
+		ft_printf("Erreur malloc");
+		free_all_exit(game, EXIT_FAILURE, 1);
 	}
-	str_path = ft_strncpy_gnl(str_path, &str[start], end - start);
+	ft_strncpy_cb(str_path, &str[start], end - start);
 	return (str_path);
 }
 
@@ -49,7 +49,7 @@ char	*find_path_textures_in_file(char *str, t_game *game)
 					return (str_path);
 				i++;
 			}
-			free_all_exit(game, EXIT_FAILURE);
+			free_all_exit(game, EXIT_FAILURE, 1);
 		}
 	}
 	return (NULL);
@@ -100,14 +100,14 @@ char	*find_path_color_in_file(char *str, t_game *game)
 
 	if (validate_color_format(str) == -1)
 	{
-		perror("Erreur : format de couleur invalide");
-		free_all_exit(game, EXIT_FAILURE);
+		ft_printf("Erreur : format de couleur invalide\n");
+		free_all_exit(game, EXIT_FAILURE, 0);
 	}
 	result = ft_strdup(str);
 	if (!result)
 	{
-		perror("Erreur : allocation mémoire échouée");
-		free_all_exit(game, EXIT_FAILURE);
+		ft_printf("Erreur : allocation mémoire échouée\n");
+		free_all_exit(game, EXIT_FAILURE, 0);
 	}
 	return (result);
 }

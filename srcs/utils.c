@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:38:13 by kenzo             #+#    #+#             */
-/*   Updated: 2025/02/19 20:06:36 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 05:42:06 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	convert_to_hex_color(int r, int g, int b)
 {
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
-		perror("Erreur : Valeur RGB invalide");
+		ft_printf("Erreur : Valeur RGB invalide");
 		exit(EXIT_FAILURE);
 	}
 	return ((r << 16) | (g << 8) | b);
@@ -67,4 +67,20 @@ void	print_map(t_map *map)
 		ft_printf("\n");
 		y++;
 	}
+}
+
+char	*ft_strncpy_cb(char *dest, char *src, int n)
+{
+	int	i;
+
+	if (!dest || !src || n <= 0)
+		return (NULL);
+	i = 0;
+	while (i < n && src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

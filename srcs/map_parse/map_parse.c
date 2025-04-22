@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:08 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/18 05:56:59 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	parse_texture_line(t_dir_parse *parse, char *line, int id, char *identifier)
 			return (1);
 		}
 		else
-			exit(1);
+			free_all_exit(parse->game, EXIT_FAILURE, 1);
 	}
 	return (0);
 }
@@ -67,8 +67,8 @@ void	parse_line(t_map *map, char *line, t_game *game)
 	valid_key += parse_texture_line(&parse, line, 5, "C ");
 	if (valid_key == 0)
 	{
-		perror("Erreur : Clé invalide dans le fichier");
-		free_all_exit(game, EXIT_FAILURE);
+		ft_printf("Erreur : Clé invalide dans le fichier");
+		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 }
 
@@ -85,6 +85,8 @@ int	ft_isempty_line(char *line)
 
 int	ft_is_map_line(char *line)
 {
+	if (!line)
+		return (0);
 	while (*line != '\0')
 	{
 		if (ft_strchr(" 01NESW\n", *line))

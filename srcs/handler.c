@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 20:07:19 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/18 06:02:24 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 05:32:19 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	handle_rotation(int keycode, t_game *game)
 int	handle_keypress(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESCAPE)
-		free_all_exit(game, EXIT_FAILURE);
+		free_all_exit(game, EXIT_FAILURE, 1);
 	handle_movement(keycode, game);
 	handle_rotation(keycode, game);
 	draw_scene(game);

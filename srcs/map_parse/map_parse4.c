@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:30:29 by kenzo             #+#    #+#             */
-/*   Updated: 2025/03/18 19:42:59 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	parse_player(t_game *game, t_map *map, t_vector pos, char c)
 {
 	if (game->player.initialised)
 	{
-		perror("Erreur : Maximum un joueur");
-		free_all_exit(game, EXIT_FAILURE);
+		ft_printf("Erreur : Maximum un joueur");
+		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 	game->player.initialised = 1;
 	game->player.pos.x = pos.x;

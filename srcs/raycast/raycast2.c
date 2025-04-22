@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:14:12 by kenzo             #+#    #+#             */
-/*   Updated: 2025/03/18 19:14:51 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	*allocate_buffer(void)
 	buffer = (int *)malloc(SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
 	if (!buffer)
 	{
-		perror("Erreur malloc");
+		ft_printf("Erreur malloc");
 		return (NULL);
 	}
 	ft_memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
