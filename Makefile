@@ -9,8 +9,8 @@ OBJ = $(SRC:%.c=%.o)
 
 MODULE = libft/libft.a
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g 
-LFLAGS = -L./minilibx -lmlx -lm -lX11 -lXext -g3 \
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g 
+LFLAGS = -L./minilibx -lmlx -lm -lX11 -lXext -fsanitize=address -g3 \
 	-finline-functions -ffast-math -falign-functions -funroll-loops -fstrict-aliasing \
 	-fomit-frame-pointer -flto -Ofast -O1 -O2 -Os -O3
 

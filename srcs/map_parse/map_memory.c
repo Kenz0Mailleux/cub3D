@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:42:36 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 06:10:27 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 21:59:29 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	**allocate_map(int width, int height, t_game *game)
 			free(map);
 			free_all_exit(game, EXIT_FAILURE, 1);
 		}
+		ft_memset(map[i], -1, sizeof(int) * width);
 		i++;
 	}
 	return (map);

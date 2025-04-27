@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:41 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:46:25 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 19:36:49 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	draw_scene(t_game *game)
 
 int	close_window(t_game *game)
 {
-	ft_printf("Fermeture de la fenêtre demandée.\n");
 	free_all_exit(game, EXIT_FAILURE, 1);
 	return (0);
 }

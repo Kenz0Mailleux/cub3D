@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:05:54 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 06:10:14 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:13:55 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	find_map_start(t_game *game, char **map_str, int i)
 		}
 		if (!ft_is_map_line(map_str[i]))
 		{
-			ft_printf("Ligne invalide\n");
+			ft_printf("Ligne invalide2\n");
 			free_all_exit(game, EXIT_FAILURE, 0);
 		}
 		i++;

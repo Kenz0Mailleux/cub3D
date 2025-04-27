@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:08 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 06:10:20 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 21:42:48 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	ft_is_map_line(char *line)
 		return (0);
 	while (*line != '\0')
 	{
-		if (ft_strchr(" 01NESW\n", *line))
+		if (ft_strchr(" \t01NESW\n", *line))
 			line++;
 		else
 			return (0);

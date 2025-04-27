@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 13:48:16 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 06:01:56 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:16:42 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,18 @@ void	init_image_paths(t_game *game)
 	game->images[1].path = game->map->image[1].path;
 	game->images[2].path = game->map->image[2].path;
 	game->images[3].path = game->map->image[3].path;
+}
+
+void	init_image_paths_2(t_game *game)
+{
+	int		i;
+
+	i = 0;
+	while (i < 4)
+	{
+		game->images[i].img_ptr = NULL;
+		i++;
+	}
 }
 
 void	load_textures(t_game *game, int width, int height)
@@ -73,19 +85,23 @@ t_game	*init_game(char *path, int width, int height, char *title)
 
 	game = malloc(sizeof(t_game));
 	if (!game)
-		free_all_exit(game, EXIT_FAILURE, 1);
+		exit(EXIT_FAILURE);
 	game->player.initialised = 0;
+	game->mlx_ptr = NULL;
+	game->win_ptr = NULL;
+	game->map = NULL;
+	init_image_paths_2(game);
 	game->map = parse_map(path, game);
 	game->player.pos.x += 0.5;
 	game->player.pos.y += 0.5;
 	check_map_closed(game);
+	init_image_paths(game);
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
 		free_all_exit(game, EXIT_FAILURE, 1);
 	game->win_ptr = mlx_new_window(game->mlx_ptr, width, height, title);
 	if (!game->win_ptr)
 		free_all_exit(game, EXIT_FAILURE, 1);
-	init_image_paths(game);
 	load_textures(game, width, height);
 	return (game);
 }

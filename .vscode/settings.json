@@ -1,5 +1,14 @@
 {
 	"files.associations": {
-		"cub3d.h": "c"
+		"cub3d.h": "c",
+		"array": "c",
+		"string": "c",
+		"vector": "c",
+		"string_view": "c",
+		"functional": "c",
+		"limits": "c",
+		"ostream": "c",
+		"streambuf": "c",
+		"tuple": "c"
 	}
 }

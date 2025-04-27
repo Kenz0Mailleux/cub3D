@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:05:58 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 06:09:56 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 21:55:45 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	fill_map_cell(t_game *game, t_map *map, char c, t_vector pos)
 		map->data[(int)pos.y][(int)pos.x] = 2;
 	}
 	else
-		map->data[(int)pos.y][(int)pos.x] = 0;
+		map->data[(int)pos.y][(int)pos.x] = -1;
 }
 
 void	populate_map_data(char **map_str,

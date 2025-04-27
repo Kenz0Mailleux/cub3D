@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 05:06:29 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 06:02:14 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 20:09:56 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_images(t_game *game)
 {
 	int	i;
 
-	if (!game || !game->map->image)
+	if (!game || !game->map || !game->map->image)
 		return ;
 	i = 0;
 	while (i < 6)
@@ -70,19 +70,28 @@ void	free_graphics(t_game *game)
 {
 	int	i;
 
-	i = 0;
+	if (!game)
+		return ;
 	if (game->mlx_ptr)
 	{
+		i = 0;
 		while (i < 4)
 		{
 			if (game->images[i].img_ptr)
+			{
 				mlx_destroy_image(game->mlx_ptr, game->images[i].img_ptr);
+				game->images[i].img_ptr = NULL;
+			}
 			i++;
 		}
 		if (game->win_ptr)
+		{
 			mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+			game->win_ptr = NULL;
+		}
 		mlx_destroy_display(game->mlx_ptr);
 		free(game->mlx_ptr);
+		game->mlx_ptr = NULL;
 	}
 }
 
