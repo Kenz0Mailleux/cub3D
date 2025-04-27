@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:08 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/27 21:42:48 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:52:17 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	parse_texture_line(t_dir_parse *parse, char *line, int id, char *identifier)
 			parse->map->image[id].found = 1;
 			return (1);
 		}
-		else
-			free_all_exit(parse->game, EXIT_FAILURE, 1);
+		ft_printf("Erreur: un coté a deux textures.\n");
+		free_all_exit(parse->game, EXIT_FAILURE, 1);
 	}
 	return (0);
 }
@@ -67,7 +67,7 @@ void	parse_line(t_map *map, char *line, t_game *game)
 	valid_key += parse_texture_line(&parse, line, 5, "C ");
 	if (valid_key == 0)
 	{
-		ft_printf("Erreur : Clé invalide dans le fichier\n");
+		ft_printf("Erreur : Clé invalide dans le fichier.\n");
 		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:00:08 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/27 22:09:50 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:30:03 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int		ft_is_map_line(char *line);
 /*map parse2*/
 int		find_map_start(t_game *game, char **map_str, int i);
 int		parse_file(t_map *map, char **map_str, t_game *game);
-t_map	*init_map_struct(void);
+t_map	*init_map_struct(t_game *game);
 void	calculate_map_dimensions(char **map_str, int *width,
 			int *height, int start_index);
 
@@ -183,7 +183,7 @@ void	calcul_textre_x(t_raycast *rc, t_game *game);
 
 /*raycast2*/
 void	texture_wall(t_raycast *rc, t_game *game);
-int		*allocate_buffer(void);
+int		*allocate_buffer(t_game *game);
 void	calculate_ray_for_pixel(t_raycast *rc, t_game *game, int x);
 void	calculate_line_height(t_raycast *rc);
 void	render_ceiling_and_floor(t_raycast *rc, t_game *game, int x);
@@ -197,7 +197,7 @@ void	init_map_image_path(t_map *map);
 int		map_alloc_size(const char *filename);
 int		**allocate_map(int width, int height, t_game *game);
 void	free_map(int **map, int height);
-char	**init_map_str(const char *filename);
+char	**init_map_str(const char *filename, t_game *game);
 
 /*utils*/
 int		ft_isspace(char c);

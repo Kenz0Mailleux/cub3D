@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:14:10 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:32:19 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:27:10 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	raycast_calcul(t_game *game)
 
 	rc.tex_width = 64;
 	rc.tex_height = 64;
-	rc.buffer = allocate_buffer();
+	rc.buffer = allocate_buffer(game);
 	if (!rc.buffer)
 		free_all_exit(game, EXIT_FAILURE, 1);
 	x = 0;

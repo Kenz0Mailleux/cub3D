@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:14:12 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 05:42:16 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:26:42 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	texture_wall(t_raycast *rc, t_game *game)
 	}
 }
 
-int	*allocate_buffer(void)
+int	*allocate_buffer(t_game *game)
 {
 	int	*buffer;
 
@@ -46,7 +46,7 @@ int	*allocate_buffer(void)
 	if (!buffer)
 	{
 		ft_printf("Erreur malloc");
-		return (NULL);
+		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 	ft_memset(buffer, 0, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(int));
 	return (buffer);

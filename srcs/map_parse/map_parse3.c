@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:05:58 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/27 21:55:45 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:41:30 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,13 @@ t_map	*parse_map(char *filename, t_game *game)
 	int		height;
 	int		start_index;
 
-	map = init_map_struct();
-	map_str = init_map_str(filename);
+	map = init_map_struct(game);
+	map_str = init_map_str(filename, game);
 	start_index = parse_file(map, map_str, game);
 	start_index += check_strings(&map_str[start_index]);
 	if (start_index == -1)
 	{
-		ft_printf("Erreur : map invalide\n");
+		ft_printf("Erreur : map invalide.\n");
 		free_all_exit(game, EXIT_FAILURE, 1);
 	}
 	calculate_map_dimensions(map_str, &width, &height, start_index);

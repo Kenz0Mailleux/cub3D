@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 02:17:18 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/27 22:14:38 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:31:28 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 #include "../../cub3D.h"
 
-static int	**allocate_visited(int height, int width)
+static int	**allocate_visited(int height, int width, t_game *game)
 {
 	int	**visited;
 	int	i;
@@ -32,7 +32,7 @@ static int	**allocate_visited(int height, int width)
 	i = 0;
 	visited = malloc(sizeof(int *) * height);
 	if (!visited)
-		return (NULL);
+		free_all_exit(game, EXIT_FAILURE, 1);
 	while (i < height)
 	{
 		visited[i] = calloc(width, sizeof(int));
@@ -108,7 +108,7 @@ void	check_map_closed(t_game *game)
 		ft_printf("Position invalide");
 		free_all_exit(game, EXIT_FAILURE, 1);
 	}
-	visited = allocate_visited(size.y, size.x);
+	visited = allocate_visited(size.y, size.x, game);
 	if (!visited)
 		free_all_exit(game, EXIT_FAILURE, 1);
 	dfs(pos, game, visited, size);

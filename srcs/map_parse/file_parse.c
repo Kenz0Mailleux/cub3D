@@ -6,7 +6,7 @@
 /*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:49:58 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/22 06:10:33 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/27 22:51:29 by kenzo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ char	*extract_texture_path(char *str, int start, int end, t_game *game)
 
 	str_path = malloc(sizeof(char) * (end - start + 1));
 	if (!str_path)
-	{
-		ft_printf("Erreur malloc\n");
 		free_all_exit(game, EXIT_FAILURE, 1);
-	}
 	ft_strncpy_cb(str_path, &str[start], end - start);
 	return (str_path);
 }
@@ -45,10 +42,10 @@ char	*find_path_textures_in_file(char *str, t_game *game)
 			str_path = extract_texture_path(str, j, i, game);
 			while (str[i] && ft_isspace(str[i]))
 			{
-				if (str[i] == '\n')
+				if (str[i++] == '\n')
 					return (str_path);
-				i++;
 			}
+			ft_printf("Erreur: ligne de texture incorect.\n");
 			free_all_exit(game, EXIT_FAILURE, 1);
 		}
 	}
@@ -100,14 +97,11 @@ char	*find_path_color_in_file(char *str, t_game *game)
 
 	if (validate_color_format(str) == -1)
 	{
-		ft_printf("Erreur : format de couleur invalide\n");
+		ft_printf("Erreur : format de couleur invalide.\n");
 		free_all_exit(game, EXIT_FAILURE, 0);
 	}
 	result = ft_strdup(str);
 	if (!result)
-	{
-		ft_printf("Erreur : allocation mémoire échouée\n");
 		free_all_exit(game, EXIT_FAILURE, 0);
-	}
 	return (result);
 }
