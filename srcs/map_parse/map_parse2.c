@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 19:05:54 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/27 22:41:22 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/28 13:56:37 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	find_map_start(t_game *game, char **map_str, int i)
 	{
 		if (!map_str[i])
 		{
-			ft_printf("Ligne invalide\n");
+			ft_printf("Carte invalide\n");
 			free_all_exit(game, EXIT_FAILURE, 0);
 		}
 		if (!ft_is_map_line(map_str[i]))
 		{
-			ft_printf("Ligne invalide\n");
+			ft_printf(" %i de carte invalide\n", i-start);
 			free_all_exit(game, EXIT_FAILURE, 0);
 		}
 		i++;
