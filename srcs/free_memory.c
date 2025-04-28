@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 05:06:29 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/27 20:09:56 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/28 13:29:54 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_images(t_game *game)
 {
 	int	i;
 
-	if (!game || !game->map || !game->map->image)
+	if (!game || !game->map || !game->map)
 		return ;
 	i = 0;
 	while (i < 6)

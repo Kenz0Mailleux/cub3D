@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 20:21:08 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/27 22:52:17 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/28 13:48:26 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	parse_line(t_map *map, char *line, t_game *game)
 	parse.game = game;
 	valid_key = 0;
 	valid_key += parse_texture_line(&parse, line, 0, "NO ");
-	valid_key += parse_texture_line(&parse, line, 1, "SO ");
-	valid_key += parse_texture_line(&parse, line, 2, "EA ");
+	valid_key += parse_texture_line(&parse, line, 1, "EA ");
+	valid_key += parse_texture_line(&parse, line, 2, "SO ");
 	valid_key += parse_texture_line(&parse, line, 3, "WE ");
 	valid_key += parse_texture_line(&parse, line, 4, "F ");
 	valid_key += parse_texture_line(&parse, line, 5, "C ");
