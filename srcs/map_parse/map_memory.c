@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_memory.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kenzo <kenzo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kmailleu <kmailleu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 01:42:36 by kenzo             #+#    #+#             */
-/*   Updated: 2025/04/27 22:37:42 by kenzo            ###   ########.fr       */
+/*   Updated: 2025/04/28 13:52:31 by kmailleu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,13 @@ int	map_alloc_size(const char *filename)
 	return (i);
 }
 
-static void	free_map_str(char **map_str, int i, int file)
+static void	free_map_str(char **map_str, int i, int file, t_game *game)
 {
 	while (i > 0)
 		free(map_str[--i]);
 	free(map_str);
 	close(file);
+	free_all_exit(game, EXIT_FAILURE, 1);
 }
 
 char	**init_map_str(const char *filename, t_game *game)
@@ -96,7 +97,7 @@ char	**init_map_str(const char *filename, t_game *game)
 		map_str[i] = ft_strdup(str);
 		free(str);
 		if (!map_str[i++])
-			return (free_map_str(map_str, i, file), NULL);
+			return (free_map_str(map_str, i, file, game), NULL);
 		str = get_next_line(file);
 	}
 	map_str[i] = NULL;
